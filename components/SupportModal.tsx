@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, MessageCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 interface SupportModalProps {
   isOpen: boolean;
@@ -7,29 +9,56 @@ interface SupportModalProps {
 }
 
 const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) => {
+  const { user } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
-    // Simulate sending message
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setSuccess(true);
-    setIsSubmitting(false);
-    
-    setTimeout(() => {
-      setSuccess(false);
-      setName('');
-      setEmail('');
-      setMessage('');
-      onClose();
-    }, 2000);
+    try {
+      // Store in database if user is logged in
+      if (user) {
+        await supabase.from('support_messages').insert({
+          user_id: user.id,
+          sender: 'user',
+          message: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+        });
+      }
+
+      // Send email via edge function
+      const { error: emailError } = await supabase.functions.invoke('send-support-email', {
+        body: {
+          name,
+          email,
+          message,
+          userId: user?.id,
+        },
+      });
+
+      if (emailError) throw emailError;
+
+      setSuccess(true);
+      
+      setTimeout(() => {
+        setSuccess(false);
+        setName('');
+        setEmail('');
+        setMessage('');
+        onClose();
+      }, 2000);
+    } catch (err: any) {
+      console.error('Error sending support message:', err);
+      setError('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -63,6 +92,11 @@ const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="bg-red-500/20 border border-red-500 rounded-lg p-3 text-red-500 text-sm">
+                  {error}
+                </div>
+              )}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-neutral-300 mb-1">
                   Name
