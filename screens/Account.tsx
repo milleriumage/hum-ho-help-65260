@@ -174,6 +174,29 @@ const Account: React.FC = () => {
                         <label htmlFor="email" className="block text-sm font-medium text-neutral-300">Email</label>
                         <input type="email" name="email" id="email" value={currentUser.email || ''} disabled className="mt-1 block w-full bg-neutral-700 border-neutral-600 rounded-md py-2 px-3 text-neutral-500 cursor-not-allowed" />
                         <p className="text-xs text-neutral-400 mt-1">Email cannot be changed for security reasons</p>
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                try {
+                                    const { supabase } = await import('../src/integrations/supabase/client');
+                                    const { error } = await supabase.auth.resend({
+                                        type: 'signup',
+                                        email: currentUser.email!
+                                    });
+                                    
+                                    if (error) throw error;
+                                    
+                                    setNotification('Verification email sent! Check your inbox.');
+                                    setTimeout(() => setNotification(null), 3000);
+                                } catch (err) {
+                                    setNotification('Failed to send verification email');
+                                    setTimeout(() => setNotification(null), 3000);
+                                }
+                            }}
+                            className="mt-2 text-sm text-brand-primary hover:text-brand-light underline"
+                        >
+                            Resend Email Verification
+                        </button>
                     </div>
                      {/* Add more fields as needed, e.g., age, gender, phone */}
 

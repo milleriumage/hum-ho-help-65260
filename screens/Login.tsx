@@ -150,7 +150,7 @@ const Login: React.FC = () => {
                         FUN<span className="text-brand-primary">FANS</span>
                     </h1>
                     <p className="mt-2 text-neutral-400">
-                        {showForgotPassword ? 'Recuperar Senha' : showForgotEmail ? 'Recuperar Email' : 'Your exclusive content hub.'}
+                        {showForgotPassword ? 'Recover Password' : showForgotEmail ? 'Recover Email' : 'Your exclusive content hub.'}
                     </p>
                 </div>
                 
@@ -174,7 +174,7 @@ const Login: React.FC = () => {
                             }}
                             className={`w-1/2 py-3 font-semibold text-center transition-colors ${activeTab === 'register' ? 'text-white border-b-2 border-brand-primary' : 'text-neutral-400 hover:text-white'}`}
                         >
-                            Cadastrar
+                            Sign Up
                         </button>
                     </div>
                 )}
@@ -194,7 +194,7 @@ const Login: React.FC = () => {
                 {showForgotEmail ? (
                     <div className="space-y-4">
                         <p className="text-sm text-neutral-300">
-                            Se você esqueceu seu email, entre em contato com o suporte através do ícone no canto inferior da tela.
+                            If you forgot your email, please contact support through the icon in the bottom corner of the screen.
                         </p>
                         <button 
                             onClick={() => {
@@ -203,7 +203,7 @@ const Login: React.FC = () => {
                             }}
                             className="w-full py-3 font-bold text-white bg-neutral-700 rounded-lg hover:bg-neutral-600 transition-colors"
                         >
-                            Voltar ao Login
+                            Back to Login
                         </button>
                     </div>
                 ) : (
@@ -213,7 +213,7 @@ const Login: React.FC = () => {
                             <input 
                                 id="email" 
                                 type="email" 
-                                placeholder="voce@exemplo.com" 
+                                placeholder="you@example.com"
                                 required 
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -226,7 +226,7 @@ const Login: React.FC = () => {
                             <>
                                 <div>
                                     <div className="flex justify-between items-center mb-1">
-                                        <label className="text-sm font-medium text-neutral-300" htmlFor="password">Senha</label>
+                                        <label className="text-sm font-medium text-neutral-300" htmlFor="password">Password</label>
                                         <div className="flex gap-2">
                                             <button 
                                                 type="button"
@@ -236,7 +236,7 @@ const Login: React.FC = () => {
                                                 }}
                                                 className="text-xs text-neutral-400 hover:text-brand-light"
                                             >
-                                                Esqueceu o email?
+                                                Forgot email?
                                             </button>
                                             <button 
                                                 type="button"
@@ -247,7 +247,7 @@ const Login: React.FC = () => {
                                                 }}
                                                 className="text-xs text-neutral-400 hover:text-brand-light"
                                             >
-                                                Esqueceu a senha?
+                                                Forgot password?
                                             </button>
                                         </div>
                                     </div>
@@ -265,7 +265,7 @@ const Login: React.FC = () => {
                                 
                                 {activeTab === 'register' && (
                                     <div>
-                                        <label className="text-sm font-medium text-neutral-300" htmlFor="confirmPassword">Confirmar Senha</label>
+                                        <label className="text-sm font-medium text-neutral-300" htmlFor="confirmPassword">Confirm Password</label>
                                         <input 
                                             id="confirmPassword" 
                                             type="password" 
@@ -286,9 +286,9 @@ const Login: React.FC = () => {
                             disabled={isSubmitting}
                             className="w-full py-3 font-bold text-white bg-brand-primary rounded-lg hover:bg-brand-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isSubmitting ? 'Processando...' : 
-                             showForgotPassword ? 'Enviar Link de Recuperação' :
-                             activeTab === 'login' ? 'Entrar' : 'Criar Conta'}
+                            {isSubmitting ? 'Processing...' : 
+                             showForgotPassword ? 'Send Recovery Link' :
+                             activeTab === 'login' ? 'Sign In' : 'Create Account'}
                         </button>
                         
                         {showForgotPassword && (
@@ -301,7 +301,7 @@ const Login: React.FC = () => {
                                 }}
                                 className="w-full py-2 font-semibold text-neutral-400 hover:text-white transition-colors"
                             >
-                                Voltar ao Login
+                                Back to Login
                             </button>
                         )}
                     </form>
