@@ -144,43 +144,6 @@ const Login: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900 p-4">
         <div className="w-full max-w-md relative">
-            <div className="absolute top-4 right-4 z-10" ref={demoRef}>
-                <button 
-                    onClick={() => setIsDemoOpen(!isDemoOpen)}
-                    className="flex items-center p-2 bg-neutral-700 text-white rounded-full hover:bg-neutral-600"
-                    aria-label="Access Demo Accounts"
-                >
-                    <DemoIcon />
-                </button>
-                {isDemoOpen && (
-                    <div className="absolute right-0 mt-2 w-64 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl animate-fade-in-down">
-                        <div className="p-2">
-                             <p className="text-xs text-neutral-400 px-2 pb-1">Select a demo profile to login:</p>
-                             {allUsers
-                              .filter(user => ['user', 'creator', 'developer'].includes(user.role))
-                              .map(user => (
-                                <button
-                                    key={user.id}
-                                    onClick={() => handleDemoLogin(user.id)}
-                                    className="w-full flex items-center p-2 text-left rounded-md hover:bg-neutral-700 transition-colors"
-                                >
-                                    <img src={user.profilePictureUrl} alt={user.username} className="w-9 h-9 rounded-full mr-3" />
-                                    <div className="flex-1">
-                                        <p className="font-semibold text-sm text-white">{user.username}</p>
-                                        <p className="text-xs text-neutral-400 capitalize">
-                                          {user.role === 'developer' && '🔧 '}
-                                          {user.role === 'creator' && '⭐ '}
-                                          {user.role === 'user' && '👤 '}
-                                          {user.role}
-                                        </p>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
-
             <div className="p-8 space-y-6 bg-neutral-800 rounded-xl shadow-lg">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-white tracking-wider">
