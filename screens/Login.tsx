@@ -29,7 +29,12 @@ const Login: React.FC = () => {
   // Auto-login quando o usuário do Supabase estiver autenticado
   useEffect(() => {
     if (user && !loading) {
-      registerOrLoginUser(user.id, user.email || '', user.email?.split('@')[0]);
+      // Se for dev@funfans.com, usar o ID fixo da sessão DEV
+      if (user.email === 'dev@funfans.com') {
+        registerOrLoginUser('20251103-002', 'dev@funfans.com', 'DevAdmin');
+      } else {
+        registerOrLoginUser(user.id, user.email || '', user.email?.split('@')[0]);
+      }
     }
   }, [user, loading, registerOrLoginUser]);
 

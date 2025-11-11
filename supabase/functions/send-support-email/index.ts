@@ -22,8 +22,10 @@ serve(async (req: Request): Promise<Response> => {
   try {
     const { name, email, message }: SupportEmailRequest = await req.json();
 
+    console.log('Sending email to linkteamcreators@gmail.com from', name, email);
+    
     const emailResponse = await resend.emails.send({
-      from: "FunFans Support <onboarding@resend.dev>",
+      from: "support@resend.dev",
       to: ["linkteamcreators@gmail.com"],
       subject: `Support message from ${name}`,
       reply_to: email,
@@ -35,6 +37,8 @@ serve(async (req: Request): Promise<Response> => {
         <p>${message?.replace(/\n/g, '<br/>')}</p>
       `,
     });
+    
+    console.log('Email sent successfully:', emailResponse);
 
     return new Response(JSON.stringify(emailResponse), {
       status: 200,
