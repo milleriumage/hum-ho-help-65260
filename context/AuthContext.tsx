@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const signUp = useCallback(async (email: string, password: string) => {
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = 'https://chatlink.links/';
       
       const { error } = await supabase.auth.signUp({
         email,
@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const resetPassword = useCallback(async (email: string) => {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: 'https://chatlink.links/reset-password',
       });
       
       return { error };
