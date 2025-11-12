@@ -180,9 +180,9 @@ const Login: React.FC = () => {
     }, [demoRef]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900 p-3 sm:p-4">
         <div className="w-full max-w-md relative">
-            <div className="p-8 space-y-6 bg-neutral-800 rounded-xl shadow-lg">
+            <div className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-neutral-800 rounded-xl shadow-lg">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-white tracking-wider">
                         FUN<span className="text-brand-primary">FANS</span>
@@ -371,9 +371,9 @@ const Login: React.FC = () => {
             </div>
         </div>
         
-        <div className="mt-12 w-full max-w-5xl">
-            <h2 className="text-center text-xl font-bold text-white mb-4">Discover a World of Content</h2>
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pointer-events-none">
+        <div className="mt-8 sm:mt-12 w-full max-w-5xl px-2">
+            <h2 className="text-center text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Discover a World of Content</h2>
+             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 pointer-events-none">
                  {showcaseItems.map(item => (
                     <div key={item.id} className="opacity-70">
                         <OnlyFansCard item={{...item, blurLevel: 8}} onCardClick={() => {}} />

@@ -4,6 +4,8 @@ import { Screen } from '../types';
 import { useCredits } from '../hooks/useCredits';
 import CancelSubscriptionModal from './CancelSubscriptionModal';
 import Notification from './Notification';
+import { MobileMenuButton, MobileMenu } from './MobileMenu';
+
 interface NavbarProps {
   navigate: (screen: Screen) => void;
 }
@@ -27,6 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   console.log('Navbar - userSubscription:', userSubscription);
   console.log('Navbar - navbarVisibility:', navbarVisibility);
@@ -61,22 +64,33 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
   return (
     <>
       {notification && <Notification message={notification} type="success" />}
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)}
+        onNavigate={(screen) => {
+          setIsMobileMenuOpen(false);
+          navigate(screen);
+        }}
+      />
     <nav className="flex-shrink-0 bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-700">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
+            <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
             <button 
               onClick={() => window.open('/chat', '_blank')}
-              className="flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200"
+              className="hidden sm:flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
             >
-              Share Funators
+              <span className="hidden md:inline">Share Funators</span>
+              <span className="md:hidden">Share</span>
             </button>
             {currentUser && (
               <button 
                 onClick={() => window.open(`/chat/${currentUser.id}`, '_blank')}
-                className="flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200"
+                className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
               >
-                Chat Sales
+                <span className="hidden md:inline">Chat Sales</span>
+                <span className="md:hidden">Chat</span>
               </button>
             )}
           </div>
