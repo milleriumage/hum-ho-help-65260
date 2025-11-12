@@ -84,6 +84,7 @@ const Sidebar: React.FC = () => {
   const { signOut } = useAuth();
   const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
   const [geminiMode, setGeminiMode] = useState<'improve' | 'analyze'>('improve');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const openGeminiModal = (mode: 'improve' | 'analyze') => {
     setGeminiMode(mode);
@@ -102,6 +103,7 @@ const Sidebar: React.FC = () => {
   };
 
   const handleNavigation = (screen?: Screen) => {
+    setIsMobileMenuOpen(false); // Fecha menu mobile ao navegar
     if (screen === 'creator-chat' && currentUser?.vitrineSlug) {
       window.history.pushState({}, '', `/chat/${currentUser.vitrineSlug}`);
       setCurrentScreen(screen);
