@@ -8,10 +8,10 @@ interface SupportModalProps {
 
 const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const email = 'exman774@gmail.com'; // Default email
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +30,6 @@ const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) => {
       setTimeout(() => {
         setSuccess(false);
         setName('');
-        setEmail('');
         setMessage('');
         onClose();
       }, 2000);
@@ -80,21 +79,6 @@ const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) => {
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
                   placeholder="Your name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="support-email" className="block text-sm font-medium text-neutral-300 mb-1">
-                  Email
-                </label>
-                <input
-                  id="support-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
-                  placeholder="your@email.com"
                 />
               </div>
 
