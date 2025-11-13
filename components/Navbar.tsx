@@ -77,6 +77,19 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
+            
+            {/* Botão central-esquerdo mobile para abrir menu */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="fixed left-4 top-1/2 -translate-y-1/2 z-30 md:hidden bg-neutral-700/95 hover:bg-neutral-600 text-white p-3 rounded-full shadow-xl transition-all border-2 border-neutral-600 backdrop-blur-sm"
+              aria-label="Abrir menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
             <button 
               onClick={handleShare}
               className="hidden sm:flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
