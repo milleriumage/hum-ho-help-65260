@@ -90,8 +90,8 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                 onClick={() => navigate('creator-chat')}
                 className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
               >
-                <span className="hidden md:inline">Chat Sales</span>
-                <span className="md:hidden">Chat</span>
+                <span className="hidden md:inline">Funators Chat</span>
+                <span className="md:hidden">Funators</span>
               </button>
             )}
           </div>

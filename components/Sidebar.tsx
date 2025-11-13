@@ -85,6 +85,7 @@ const Sidebar: React.FC = () => {
   const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
   const [geminiMode, setGeminiMode] = useState<'improve' | 'analyze'>('improve');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const openGeminiModal = (mode: 'improve' | 'analyze') => {
     setGeminiMode(mode);
@@ -163,30 +164,73 @@ const Sidebar: React.FC = () => {
   return (
     <>
     {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
-    <aside className="w-64 bg-neutral-800 border-r border-neutral-700 flex-shrink-0 hidden md:flex md:flex-col">
-       <div className="p-4 border-b border-neutral-700">
+    
+    {/* Botão flutuante para expandir quando colapsado */}
+    {isCollapsed && (
+      <button
+        onClick={() => setIsCollapsed(false)}
+        className="fixed left-2 top-1/2 -translate-y-1/2 z-50 bg-neutral-700 hover:bg-neutral-600 text-white p-2 rounded-lg shadow-lg transition-all hidden md:block"
+        aria-label="Expandir menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    )}
+    
+    <aside className={`${isCollapsed ? 'w-16' : 'w-64'} bg-neutral-800 border-r border-neutral-700 flex-shrink-0 hidden md:flex md:flex-col transition-all duration-300 relative`}>
+       {/* Botão para colapsar/expandir no topo do sidebar */}
+       <div className="absolute -right-3 top-4 z-10">
+         <button
+           onClick={() => setIsCollapsed(!isCollapsed)}
+           className="bg-neutral-700 hover:bg-neutral-600 text-white p-1.5 rounded-full shadow-lg transition-colors"
+           aria-label={isCollapsed ? "Expandir menu" : "Minimizar menu"}
+         >
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${isCollapsed ? 'rotate-180' : ''}`}>
+             <polyline points="15 18 9 12 15 6"></polyline>
+           </svg>
+         </button>
+       </div>
+       
+       <div className={`p-4 border-b border-neutral-700 ${isCollapsed ? 'hidden' : ''}`}>
            <ProfileHeader />
        </div>
       <div className="flex-1 overflow-y-auto">
-        <nav className="p-4">
+        <nav className={`p-4 ${isCollapsed ? 'p-2' : ''}`}>
             <ul className="space-y-2">
             {navItems
               .filter(i => i.roles.includes(userRole))
               .filter(i => !i.visibility || sidebarVisibility[i.visibility])
               .map(item => (
-                <NavItem
-                key={item.screen}
-                screen={item.screen}
-                label={item.label}
-                icon={item.icon}
-                isActive={currentScreen === item.screen}
-                onClick={handleNavigation}
-                />
+                isCollapsed ? (
+                  <li key={item.screen} className="px-2">
+                    <button
+                      onClick={() => handleNavigation(item.screen)}
+                      className={`flex items-center justify-center w-full p-3 rounded-lg transition-colors duration-200 ${
+                        currentScreen === item.screen
+                          ? 'bg-brand-primary text-white shadow-lg'
+                          : 'text-neutral-300 hover:bg-neutral-700 hover:text-white'
+                      }`}
+                      title={item.label}
+                    >
+                      <span className="w-6 h-6">{item.icon}</span>
+                    </button>
+                  </li>
+                ) : (
+                  <NavItem
+                    key={item.screen}
+                    screen={item.screen}
+                    label={item.label}
+                    icon={item.icon}
+                    isActive={currentScreen === item.screen}
+                    onClick={handleNavigation}
+                  />
+                )
             ))}
             </ul>
         </nav>
         
-        {creatorItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+        {!isCollapsed && creatorItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
           <>
             <div className="px-6 py-4">
               <div className="border-t border-neutral-700"></div>
@@ -212,7 +256,7 @@ const Sidebar: React.FC = () => {
           </>
         )}
 
-        {rechargeItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+        {!isCollapsed && rechargeItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
           <>
             <div className="px-6 py-4">
               <div className="border-t border-neutral-700"></div>
@@ -238,7 +282,7 @@ const Sidebar: React.FC = () => {
           </>
         )}
 
-        {configItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+        {!isCollapsed && configItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
           <>
             <div className="px-6 py-4">
               <div className="border-t border-neutral-700"></div>
@@ -264,7 +308,7 @@ const Sidebar: React.FC = () => {
           </>
         )}
 
-        {devItems.some(i => i.roles.includes(userRole)) && (
+        {!isCollapsed && devItems.some(i => i.roles.includes(userRole)) && (
           <>
             <div className="px-6 py-4">
               <div className="border-t border-neutral-700"></div>
@@ -307,15 +351,19 @@ const Sidebar: React.FC = () => {
         )}
       </div>
 
-      <div className="p-4 border-t border-neutral-700">
-        {userRole === 'creator' && (
+      <div className={`p-4 border-t border-neutral-700 ${isCollapsed ? 'p-2' : ''}`}>
+        {!isCollapsed && userRole === 'creator' && (
             <button onClick={shareVitrine} className="w-full text-sm text-center bg-neutral-700 text-neutral-300 hover:bg-neutral-600 rounded p-2 mb-4">
                 Share Vitrine
             </button>
         )}
-        <button onClick={handleLogout} className="w-full flex items-center justify-center p-3 rounded-lg bg-red-900/50 text-red-300 hover:bg-red-800/50 hover:text-white">
+        <button 
+          onClick={handleLogout} 
+          className={`w-full flex items-center justify-center p-3 rounded-lg bg-red-900/50 text-red-300 hover:bg-red-800/50 hover:text-white ${isCollapsed ? 'p-2' : ''}`}
+          title={isCollapsed ? "Logout" : ""}
+        >
             <LogoutIcon />
-            <span className="ml-2 font-semibold">Logout</span>
+            {!isCollapsed && <span className="ml-2 font-semibold">Logout</span>}
         </button>
       </div>
     </aside>

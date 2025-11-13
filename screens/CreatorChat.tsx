@@ -64,7 +64,7 @@ const CreatorChat: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loadingState, setLoadingState] = useState<'loading' | 'loaded'>('loading');
   const [isChatExpanded, setIsChatExpanded] = useState(true);
-  const [chatHeight, setChatHeight] = useState<'small' | 'medium' | 'large'>('medium');
+  const [chatHeight, setChatHeight] = useState<'small' | 'medium' | 'large'>('small');
   const [customChatHeight, setCustomChatHeight] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [showInlineLogin, setShowInlineLogin] = useState(false);

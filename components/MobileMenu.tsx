@@ -52,6 +52,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavig
     { screen: 'my-bio', label: 'My Bio', icon: <UserIcon />, roles: ['user', 'creator', 'developer'] },
     { screen: 'my-funs', label: 'My Funs', icon: <FunsIcon />, roles: ['user', 'creator', 'developer'] },
     { screen: 'creator-chat', label: 'Creator Chat', icon: <ChatIcon />, roles: ['user', 'creator', 'developer'] },
+    { screen: 'creator-chat', label: 'Funators Chat', icon: <ChatIcon />, roles: ['user', 'creator', 'developer'] },
   ];
 
   const rechargeItems: NavConfig[] = [
