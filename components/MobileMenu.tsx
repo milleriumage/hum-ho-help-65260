@@ -43,7 +43,7 @@ interface NavConfig {
 }
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) => {
-  const { currentScreen, userRole, sidebarVisibility, currentUser } = useCredits();
+  const { currentScreen, userRole, sidebarVisibility } = useCredits();
 
   if (!isOpen) return null;
 
@@ -94,35 +94,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavig
         </div>
 
         <div className="overflow-y-auto h-full pb-20">
-          {/* Botões especiais no topo */}
-          <div className="p-4 space-y-2 border-b border-neutral-700">
-            <button
-              onClick={() => {
-                const url = `${window.location.origin}/vitrine/${currentUser?.vitrineSlug || ''}`;
-                navigator.clipboard.writeText(url);
-                onClose();
-              }}
-              className="w-full flex items-center p-3 rounded-lg bg-brand-primary hover:bg-brand-primary/90 text-white transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-3">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-              <span className="font-semibold">Share Funators</span>
-            </button>
-            
-            <button
-              onClick={() => onNavigate('creator-chat')}
-              className="w-full flex items-center p-3 rounded-lg bg-accent-purple hover:bg-accent-purple/90 text-white transition-colors"
-            >
-              <ChatIcon />
-              <span className="font-semibold ml-3">Funators Chat</span>
-            </button>
-          </div>
-
           <nav className="p-4">
             {navItems
               .filter(item => item.roles.includes(userRole))

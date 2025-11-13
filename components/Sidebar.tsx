@@ -165,7 +165,85 @@ const Sidebar: React.FC = () => {
     <>
     {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
     
-    {/* Mobile não terá sidebar fixo - apenas MobileMenu controlado pelo Navbar */}
+    {/* Mobile Sidebar - Apenas ícones vertical */}
+    {!isCollapsed && (
+      <aside className="fixed left-0 top-0 bottom-0 w-16 bg-neutral-800 border-r border-neutral-700 z-40 md:hidden flex flex-col py-4">
+        <nav className="flex-1 flex flex-col gap-2 px-2 overflow-y-auto">
+          {navItems
+            .filter(i => i.roles.includes(userRole))
+            .filter(i => !i.visibility || sidebarVisibility[i.visibility])
+            .map(item => (
+              <button
+                key={item.screen}
+                onClick={() => handleNavigation(item.screen)}
+                className={`p-3 rounded-lg transition-colors ${
+                  currentScreen === item.screen
+                    ? 'bg-brand-primary text-white'
+                    : 'text-neutral-300 hover:bg-neutral-700'
+                }`}
+                title={item.label}
+              >
+                {item.icon}
+              </button>
+            ))}
+          
+          {/* Creator Tools Section */}
+          {creatorItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+            <>
+              <div className="border-t border-neutral-700 my-2"></div>
+              {creatorItems
+                .filter(i => i.roles.includes(userRole))
+                .filter(i => !i.visibility || sidebarVisibility[i.visibility])
+                .map(item => (
+                  <button
+                    key={item.screen}
+                    onClick={() => handleNavigation(item.screen)}
+                    className={`p-3 rounded-lg transition-colors ${
+                      currentScreen === item.screen
+                        ? 'bg-brand-primary text-white'
+                        : 'text-neutral-300 hover:bg-neutral-700'
+                    }`}
+                    title={item.label}
+                  >
+                    {item.icon}
+                  </button>
+                ))}
+            </>
+          )}
+        </nav>
+        
+        {/* Botão Logout */}
+        <button 
+          onClick={handleLogout} 
+          className="mx-2 p-3 rounded-lg bg-red-900/50 text-red-300 hover:bg-red-800/50"
+          title="Logout"
+        >
+          <LogoutIcon />
+        </button>
+      </aside>
+    )}
+    
+    {/* Botão para expandir/recolher Mobile - Centro esquerdo */}
+    <button
+      onClick={() => setIsCollapsed(!isCollapsed)}
+      className="fixed left-2 top-1/2 -translate-y-1/2 z-50 bg-neutral-700/95 hover:bg-neutral-600 text-white p-3 rounded-full shadow-xl transition-all border-2 border-neutral-600 md:hidden flex items-center justify-center backdrop-blur-sm"
+      aria-label={isCollapsed ? "Expandir menu" : "Minimizar menu"}
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="20" 
+        height="20" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2.5" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+        className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
     
     {/* Botão flutuante para expandir desktop quando colapsado */}
     {isCollapsed && (

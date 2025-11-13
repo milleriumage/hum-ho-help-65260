@@ -119,7 +119,7 @@ const MainLayout: React.FC = () => {
   return (
     <div className="flex h-screen bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 font-sans overflow-hidden">
       {showSidebar && <Sidebar />}
-      <main className="flex-1 flex flex-col overflow-hidden w-full">
+      <main className="flex-1 flex flex-col overflow-hidden w-full md:w-auto">
         {currentUser && <Navbar navigate={setCurrentScreen} />}
         <div className="flex-1 p-3 sm:p-4 md:p-6 lg:p-8 overflow-y-auto">
           {renderScreen()}
