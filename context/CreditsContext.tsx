@@ -114,6 +114,8 @@ interface CreditsContextType {
   setViewCreator: (creatorId: string | null) => void;
   setViewCreatorBySlug: (slug: string) => void;
   shareVitrine: () => void;
+  shareChatLink: () => void;
+  shareCreatorChatList: () => void;
 
   // Role & Screen Management
   setCurrentScreen: (screen: Screen) => void;
@@ -791,10 +793,25 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     if (!currentUser || !currentUser.vitrineSlug) {
         return;
     }
-    const url = `https://funfans.com/vitrine/${currentUser.vitrineSlug}`;
+    const url = `${window.location.origin}/vitrine/${currentUser.vitrineSlug}`;
     navigator.clipboard.writeText(url);
     // Show toast notification (handled by consuming component)
   }, [currentUser]);
+
+  const shareChatLink = useCallback(() => {
+    if (!currentUser || !currentUser.vitrineSlug) {
+        return;
+    }
+    const url = `${window.location.origin}/chat/${currentUser.vitrineSlug}`;
+    navigator.clipboard.writeText(url);
+    // Show toast notification (handled by consuming component)
+  }, [currentUser]);
+
+  const shareCreatorChatList = useCallback(() => {
+    const url = `${window.location.origin}/creator-chat`;
+    navigator.clipboard.writeText(url);
+    // Show toast notification (handled by consuming component)
+  }, []);
 
   const addTransaction = (trans: Omit<Transaction, 'id' | 'timestamp'>) => {
      setTransactions(prev => [
@@ -1338,6 +1355,8 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     setViewCreator: setViewCreatorCallback,
     setViewCreatorBySlug,
     shareVitrine,
+    shareChatLink,
+    shareCreatorChatList,
     setCurrentScreen,
     updateDevSettings,
     addCreditsToUser,
@@ -1360,8 +1379,8 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
       showcasedUserIds, theme, addCredits, processPurchase, addReward, addContentItem, deleteContent, 
       updateSubscriptionPlan, updateCreditPackage, subscribeToPlan, cancelSubscription, subscribeUserToPlan, 
       cancelUserSubscription, addReaction, addLike, incrementShareCount, login, logout, registerOrLoginUser, 
-      updateUserProfile, followUser, unfollowUser, setTagFilterCallback, setViewCreatorCallback, setViewCreatorBySlug, shareVitrine, 
-      updateDevSettings, addCreditsToUser, toggleContentVisibility, removeContent, setTimeOut, 
+      updateUserProfile, followUser, unfollowUser, setTagFilterCallback, setViewCreatorCallback, setViewCreatorBySlug, shareVitrine, shareChatLink, shareCreatorChatList,
+      updateDevSettings, addCreditsToUser, toggleContentVisibility, removeContent, setTimeOut,
       hideAllContentFromCreator, deleteAllContentFromCreator, isTimedOut, timeoutInfo, sidebarVisibility, 
       updateSidebarVisibility, navbarVisibility, updateNavbarVisibility,
   ]);
