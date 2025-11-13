@@ -78,15 +78,16 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
           <div className="flex items-center gap-2">
             <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
             <button 
-              onClick={() => window.open('/chat', '_blank')}
+              onClick={handleShare}
               className="hidden sm:flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
             >
+              <ShareIcon />
               <span className="hidden md:inline">Share Funators</span>
               <span className="md:hidden">Share</span>
             </button>
             {currentUser && (
               <button 
-                onClick={() => window.open(`/chat/${currentUser.id}`, '_blank')}
+                onClick={() => navigate('creator-chat')}
                 className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
               >
                 <span className="hidden md:inline">Chat Sales</span>
