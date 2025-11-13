@@ -172,7 +172,7 @@ const Sidebar: React.FC = () => {
           {/* Share Funators - Mobile */}
           <button
             onClick={shareVitrine}
-            className="p-3 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
             title="Share Funators"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -184,10 +184,27 @@ const Sidebar: React.FC = () => {
             </svg>
           </button>
           
+          {/* Vitrine Link - Mobile */}
+          <button
+            onClick={() => {
+              if (currentUser?.vitrineSlug) {
+                window.open(`https://funfans.com/vitrine/${currentUser.vitrineSlug}`, '_blank');
+              }
+            }}
+            className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
+            title="View Vitrine"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <rect x="7" y="7" width="3" height="9"/>
+              <rect x="14" y="7" width="3" height="5"/>
+            </svg>
+          </button>
+          
           {/* Funators Chat - Mobile */}
           <button
             onClick={() => handleNavigation('creator-chat')}
-            className="p-3 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-green/20 text-accent-green hover:bg-accent-green hover:text-white transition-colors"
             title="Funators Chat"
           >
             <ChatIcon />
@@ -203,7 +220,7 @@ const Sidebar: React.FC = () => {
               <button
                 key={item.screen}
                 onClick={() => handleNavigation(item.screen)}
-                className={`p-3 rounded-lg transition-colors ${
+                className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
                   currentScreen === item.screen
                     ? 'bg-brand-primary text-white'
                     : 'text-neutral-300 hover:bg-neutral-700'
@@ -225,7 +242,7 @@ const Sidebar: React.FC = () => {
                   <button
                     key={item.screen}
                     onClick={() => handleNavigation(item.screen)}
-                    className={`p-3 rounded-lg transition-colors ${
+                    className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
                       currentScreen === item.screen
                         ? 'bg-brand-primary text-white'
                         : 'text-neutral-300 hover:bg-neutral-700'
@@ -249,7 +266,7 @@ const Sidebar: React.FC = () => {
                   <button
                     key={item.screen}
                     onClick={() => handleNavigation(item.screen)}
-                    className={`p-3 rounded-lg transition-colors ${
+                    className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
                       currentScreen === item.screen
                         ? 'bg-brand-primary text-white'
                         : 'text-neutral-300 hover:bg-neutral-700'
@@ -273,7 +290,7 @@ const Sidebar: React.FC = () => {
                   <button
                     key={item.screen}
                     onClick={() => handleNavigation(item.screen)}
-                    className={`p-3 rounded-lg transition-colors ${
+                    className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
                       currentScreen === item.screen
                         ? 'bg-brand-primary text-white'
                         : 'text-neutral-300 hover:bg-neutral-700'
@@ -290,7 +307,7 @@ const Sidebar: React.FC = () => {
         {/* Botão Logout */}
         <button 
           onClick={handleLogout} 
-          className="mx-2 p-3 rounded-lg bg-red-900/50 text-red-300 hover:bg-red-800/50"
+          className="mx-2 mb-2 flex items-center justify-center w-10 h-10 rounded-lg bg-red-900/50 text-red-300 hover:bg-red-800/50 transition-colors"
           title="Logout"
         >
           <LogoutIcon />

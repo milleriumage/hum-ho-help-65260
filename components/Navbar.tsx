@@ -66,13 +66,31 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
               <span className="md:hidden">Share</span>
             </button>
             {currentUser && (
-              <button 
-                onClick={() => navigate('creator-chat')}
-                className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
-              >
-                <span className="hidden md:inline">Funators Chat</span>
-                <span className="md:hidden">Funators</span>
-              </button>
+              <>
+                <button 
+                  onClick={() => {
+                    if (currentUser?.vitrineSlug) {
+                      window.open(`https://funfans.com/vitrine/${currentUser.vitrineSlug}`, '_blank');
+                    }
+                  }}
+                  className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <rect x="7" y="7" width="3" height="9"/>
+                    <rect x="14" y="7" width="3" height="5"/>
+                  </svg>
+                  <span className="hidden md:inline">My Vitrine</span>
+                  <span className="md:hidden">Vitrine</span>
+                </button>
+                <button 
+                  onClick={() => navigate('creator-chat')}
+                  className="hidden sm:flex items-center bg-accent-green hover:bg-accent-green/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
+                >
+                  <span className="hidden md:inline">Funators Chat</span>
+                  <span className="md:hidden">Chat</span>
+                </button>
+              </>
             )}
           </div>
           <div className="flex items-center space-x-4">
