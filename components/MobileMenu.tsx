@@ -42,8 +42,18 @@ interface NavConfig {
   visibility?: keyof SidebarVisibility;
 }
 
+const ShareIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="18" cy="5" r="3"></circle>
+    <circle cx="6" cy="12" r="3"></circle>
+    <circle cx="18" cy="19" r="3"></circle>
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+  </svg>
+);
+
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) => {
-  const { currentScreen, userRole, sidebarVisibility } = useCredits();
+  const { currentScreen, userRole, sidebarVisibility, shareVitrine } = useCredits();
 
   if (!isOpen) return null;
 
@@ -94,6 +104,28 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavig
         </div>
 
         <div className="overflow-y-auto h-full pb-20">
+          {/* Share Funators e Funators Chat */}
+          <div className="p-4 space-y-2 border-b border-neutral-700">
+            <button
+              onClick={() => {
+                shareVitrine();
+                onClose();
+              }}
+              className="w-full flex items-center p-3 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+            >
+              <span className="w-5 h-5 mr-3"><ShareIcon /></span>
+              <span className="font-semibold">Share Funators</span>
+            </button>
+            
+            <button
+              onClick={() => onNavigate('creator-chat')}
+              className="w-full flex items-center p-3 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
+            >
+              <span className="w-5 h-5 mr-3"><ChatIcon /></span>
+              <span className="font-semibold">Funators Chat</span>
+            </button>
+          </div>
+          
           <nav className="p-4">
             {navItems
               .filter(item => item.roles.includes(userRole))

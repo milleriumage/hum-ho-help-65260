@@ -165,10 +165,37 @@ const Sidebar: React.FC = () => {
     <>
     {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
     
-    {/* Mobile Sidebar - Apenas ícones vertical */}
+    {/* Mobile Sidebar - Todos os ícones vertical */}
     {!isCollapsed && (
       <aside className="fixed left-0 top-0 bottom-0 w-16 bg-neutral-800 border-r border-neutral-700 z-40 md:hidden flex flex-col py-4">
         <nav className="flex-1 flex flex-col gap-2 px-2 overflow-y-auto">
+          {/* Share Funators - Mobile */}
+          <button
+            onClick={shareVitrine}
+            className="p-3 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+            title="Share Funators"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+          
+          {/* Funators Chat - Mobile */}
+          <button
+            onClick={() => handleNavigation('creator-chat')}
+            className="p-3 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
+            title="Funators Chat"
+          >
+            <ChatIcon />
+          </button>
+          
+          <div className="border-t border-neutral-700 my-2"></div>
+          
+          {/* Nav Items */}
           {navItems
             .filter(i => i.roles.includes(userRole))
             .filter(i => !i.visibility || sidebarVisibility[i.visibility])
@@ -187,11 +214,59 @@ const Sidebar: React.FC = () => {
               </button>
             ))}
           
-          {/* Creator Tools Section */}
+          {/* Creator Tools */}
           {creatorItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
             <>
               <div className="border-t border-neutral-700 my-2"></div>
               {creatorItems
+                .filter(i => i.roles.includes(userRole))
+                .filter(i => !i.visibility || sidebarVisibility[i.visibility])
+                .map(item => (
+                  <button
+                    key={item.screen}
+                    onClick={() => handleNavigation(item.screen)}
+                    className={`p-3 rounded-lg transition-colors ${
+                      currentScreen === item.screen
+                        ? 'bg-brand-primary text-white'
+                        : 'text-neutral-300 hover:bg-neutral-700'
+                    }`}
+                    title={item.label}
+                  >
+                    {item.icon}
+                  </button>
+                ))}
+            </>
+          )}
+          
+          {/* Recharge Items */}
+          {rechargeItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+            <>
+              <div className="border-t border-neutral-700 my-2"></div>
+              {rechargeItems
+                .filter(i => i.roles.includes(userRole))
+                .filter(i => !i.visibility || sidebarVisibility[i.visibility])
+                .map(item => (
+                  <button
+                    key={item.screen}
+                    onClick={() => handleNavigation(item.screen)}
+                    className={`p-3 rounded-lg transition-colors ${
+                      currentScreen === item.screen
+                        ? 'bg-brand-primary text-white'
+                        : 'text-neutral-300 hover:bg-neutral-700'
+                    }`}
+                    title={item.label}
+                  >
+                    {item.icon}
+                  </button>
+                ))}
+            </>
+          )}
+          
+          {/* Config Items */}
+          {configItems.some(i => i.roles.includes(userRole) && (!i.visibility || sidebarVisibility[i.visibility])) && (
+            <>
+              <div className="border-t border-neutral-700 my-2"></div>
+              {configItems
                 .filter(i => i.roles.includes(userRole))
                 .filter(i => !i.visibility || sidebarVisibility[i.visibility])
                 .map(item => (

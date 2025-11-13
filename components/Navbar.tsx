@@ -25,7 +25,7 @@ const ShareIcon = () => (
 );
 
 const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
-  const { navbarVisibility, userSubscription, currentUser } = useCredits();
+  const { navbarVisibility, userSubscription, currentUser, shareVitrine } = useCredits();
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
@@ -39,26 +39,6 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
     setShowPlanModal(false);
     setNotification('Sua assinatura foi cancelada com sucesso.');
     setTimeout(() => setNotification(null), 3000);
-  };
-
-  const handleShare = () => {
-    let url = window.location.origin;
-    const currentPath = window.location.pathname;
-    
-    // Se já está em uma rota de chat ou vitrine, mantém a URL
-    if (currentPath.startsWith('/chat/') || currentPath.startsWith('/vitrine/')) {
-      url = `${window.location.origin}${currentPath}`;
-    } else if (currentUser?.vitrineSlug) {
-      // Se não está em uma rota específica, usa a vitrine do usuário
-      url = `${window.location.origin}/vitrine/${currentUser.vitrineSlug}`;
-    } else {
-      // Fallback para a home
-      url = window.location.origin;
-    }
-    
-    navigator.clipboard.writeText(url);
-    setNotification('Link copiado para a área de transferência!');
-    setTimeout(() => setNotification(null), 2000);
   };
 
   return (
@@ -78,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
           <div className="flex items-center gap-2">
             <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
             <button 
-              onClick={handleShare}
+              onClick={shareVitrine}
               className="hidden sm:flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
             >
               <ShareIcon />
