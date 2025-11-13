@@ -103,7 +103,7 @@ const Home: React.FC<HomeProps> = ({ navigate }) => {
             setActiveTab(tab);
         }}
         disabled={disabled}
-        className={`px-4 py-2 text-lg font-semibold rounded-t-lg transition-colors disabled:cursor-not-allowed disabled:text-neutral-600 ${activeTab === tab && !viewingCreatorId ? 'border-b-2 border-brand-primary text-white' : 'text-neutral-400 hover:text-white'}`}
+        className={`px-3 sm:px-4 py-2 text-sm sm:text-lg font-semibold rounded-t-lg transition-colors disabled:cursor-not-allowed disabled:text-neutral-600 whitespace-nowrap ${activeTab === tab && !viewingCreatorId ? 'border-b-2 border-brand-primary text-white' : 'text-neutral-400 hover:text-white'}`}
     >
         {label}
     </button>
@@ -116,12 +116,12 @@ const Home: React.FC<HomeProps> = ({ navigate }) => {
       {viewingCreator ? (
         <div>
             <button onClick={() => setViewCreator(null)} className="text-sm text-brand-light hover:underline mb-2">&larr; Back to Home</button>
-            <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                    <img src={viewingCreator.profilePictureUrl} className="h-16 w-16 rounded-full"/>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                    <img src={viewingCreator.profilePictureUrl} className="h-12 w-12 sm:h-16 sm:w-16 rounded-full"/>
                     <div>
-                        <h1 className="text-3xl font-bold text-white">{viewingCreator.username}'s Showcase</h1>
-                        <p className="text-neutral-300">Browse all content from this creator.</p>
+                        <h1 className="text-xl sm:text-3xl font-bold text-white">{viewingCreator.username}'s Showcase</h1>
+                        <p className="text-sm sm:text-base text-neutral-300">Browse all content from this creator.</p>
                     </div>
                 </div>
                 <button
@@ -131,9 +131,9 @@ const Home: React.FC<HomeProps> = ({ navigate }) => {
                         setNotification({ message: 'Showcase link copied!', type: 'success' });
                         setTimeout(() => setNotification(null), 2000);
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-neutral-700 hover:bg-neutral-600 text-white rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-neutral-700 hover:bg-neutral-600 text-white rounded-lg transition-colors text-sm sm:text-base"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
                         <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
                         <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
                     </svg>
@@ -148,30 +148,30 @@ const Home: React.FC<HomeProps> = ({ navigate }) => {
         </div>
       ) : (
         <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Exclusive Content</h1>
-            <p className="text-neutral-300">Discover new creators and unlock instant access.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Exclusive Content</h1>
+            <p className="text-sm sm:text-base text-neutral-300">Discover new creators and unlock instant access.</p>
         </div>
       )}
 
 
-       <div className="border-b border-neutral-700 flex justify-between items-center">
+       <div className="border-b border-neutral-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         {!viewingCreatorId && (
-            <div className="flex space-x-4">
+            <div className="flex space-x-2 sm:space-x-4 overflow-x-auto w-full sm:w-auto">
                 <TabButton tab="showcase" label="Showcase" />
                 <TabButton tab="feed" label="Feed" />
                 <TabButton tab="following" label="Following" disabled={!currentUser} />
             </div>
         )}
-        <form onSubmit={handleSearch} className="flex items-center">
+        <form onSubmit={handleSearch} className="flex items-center w-full sm:w-auto">
             <input 
                 type="text" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by tag... (#art)"
-                className="bg-neutral-800 border border-neutral-700 rounded-l-full py-2 px-4 text-white focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                className="bg-neutral-800 border border-neutral-700 rounded-l-full py-2 px-4 text-white focus:outline-none focus:ring-1 focus:ring-brand-primary w-full sm:w-auto text-sm sm:text-base"
             />
-            <button type="submit" className="bg-brand-primary text-white p-2 rounded-r-full hover:bg-brand-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <button type="submit" className="bg-brand-primary text-white p-2 rounded-r-full hover:bg-brand-secondary flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </button>
         </form>
       </div>
