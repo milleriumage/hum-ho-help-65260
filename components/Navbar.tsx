@@ -25,11 +25,24 @@ const ShareIcon = () => (
 );
 
 const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
-  const { navbarVisibility, userSubscription, currentUser, shareVitrine } = useCredits();
+  const { navbarVisibility, userSubscription, currentUser, shareVitrine, setViewCreatorBySlug } = useCredits();
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleShareVitrine = () => {
+    shareVitrine();
+    setNotification('Link copied to clipboard!');
+    setTimeout(() => setNotification(null), 2000);
+  };
+
+  const handleVitrineClick = () => {
+    if (currentUser?.vitrineSlug) {
+      setViewCreatorBySlug(currentUser.vitrineSlug);
+      navigate('home');
+    }
+  };
 
   console.log('Navbar - userSubscription:', userSubscription);
   console.log('Navbar - navbarVisibility:', navbarVisibility);
@@ -58,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
           <div className="flex items-center gap-2">
             <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
             <button 
-              onClick={shareVitrine}
+              onClick={handleShareVitrine}
               className="hidden sm:flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
             >
               <ShareIcon />
@@ -68,11 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
             {currentUser && (
               <>
                 <button 
-                  onClick={() => {
-                    if (currentUser?.vitrineSlug) {
-                      window.open(`https://funfans.com/vitrine/${currentUser.vitrineSlug}`, '_blank');
-                    }
-                  }}
+                  onClick={handleVitrineClick}
                   className="hidden sm:flex items-center bg-accent-purple hover:bg-accent-purple/90 text-white font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200 text-sm md:text-base"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">

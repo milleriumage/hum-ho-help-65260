@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { SidebarVisibility } from '../context/CreditsContext';
 import ProfileHeader from './ProfileHeader';
 import GeminiModal from './GeminiModal';
+import Notification from './Notification';
 
 const HomeIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>;
 // Fix: Replaced kebab-case SVG attributes with camelCase equivalents for JSX compatibility.
@@ -80,12 +81,13 @@ interface NavConfig {
 }
 
 const Sidebar: React.FC = () => {
-  const { currentScreen, setCurrentScreen, userRole, logout, isLoggedIn, shareVitrine, sidebarVisibility, currentUser } = useCredits();
+  const { currentScreen, setCurrentScreen, userRole, logout, isLoggedIn, shareVitrine, sidebarVisibility, currentUser, setViewCreatorBySlug } = useCredits();
   const { signOut } = useAuth();
   const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
   const [geminiMode, setGeminiMode] = useState<'improve' | 'analyze'>('improve');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const openGeminiModal = (mode: 'improve' | 'analyze') => {
     setGeminiMode(mode);
@@ -111,6 +113,12 @@ const Sidebar: React.FC = () => {
     } else if (screen) {
       setCurrentScreen(screen);
     }
+  };
+
+  const handleShareVitrine = () => {
+    shareVitrine();
+    setNotification({ message: 'Link copied to clipboard!', type: 'success' });
+    setTimeout(() => setNotification(null), 2000);
   };
 
   const navItems: NavConfig[] = [
@@ -163,7 +171,8 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-    {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
+      {notification && <Notification message={notification.message} type={notification.type} />}
+      {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
     
     {/* Mobile Sidebar - Todos os ícones vertical */}
     {!isCollapsed && (
@@ -171,7 +180,7 @@ const Sidebar: React.FC = () => {
         <nav className="flex-1 flex flex-col gap-2 px-2 overflow-y-auto">
           {/* Share Funators - Mobile */}
           <button
-            onClick={shareVitrine}
+            onClick={handleShareVitrine}
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
             title="Share Funators"
           >
@@ -188,7 +197,8 @@ const Sidebar: React.FC = () => {
           <button
             onClick={() => {
               if (currentUser?.vitrineSlug) {
-                window.open(`https://funfans.com/vitrine/${currentUser.vitrineSlug}`, '_blank');
+                setViewCreatorBySlug(currentUser.vitrineSlug);
+                handleNavigation('home');
               }
             }}
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
@@ -318,20 +328,20 @@ const Sidebar: React.FC = () => {
     {/* Botão para expandir/recolher Mobile - Centro esquerdo */}
     <button
       onClick={() => setIsCollapsed(!isCollapsed)}
-      className="fixed left-2 top-1/2 -translate-y-1/2 z-50 bg-neutral-700/95 hover:bg-neutral-600 text-white p-3 rounded-full shadow-xl transition-all border-2 border-neutral-600 md:hidden flex items-center justify-center backdrop-blur-sm"
+      className="fixed left-1 top-1/2 -translate-y-1/2 z-50 bg-neutral-800/90 hover:bg-neutral-700 text-neutral-400 hover:text-white p-2 rounded-lg shadow-lg transition-all border border-neutral-700 md:hidden flex items-center justify-center backdrop-blur-sm"
       aria-label={isCollapsed ? "Expandir menu" : "Minimizar menu"}
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        width="20" 
-        height="20" 
+        width="16" 
+        height="16" 
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="currentColor" 
-        strokeWidth="2.5" 
+        strokeWidth="2" 
         strokeLinecap="round" 
         strokeLinejoin="round"
-        className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+        className={`transition-transform duration-200 ${isCollapsed ? '' : 'rotate-180'}`}
       >
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>

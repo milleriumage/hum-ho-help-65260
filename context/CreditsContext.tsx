@@ -789,12 +789,11 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const shareVitrine = useCallback(() => {
     if (!currentUser || !currentUser.vitrineSlug) {
-        alert("Could not generate a share link.");
         return;
     }
     const url = `https://funfans.com/vitrine/${currentUser.vitrineSlug}`;
     navigator.clipboard.writeText(url);
-    alert(`Link copied to clipboard!\n${url}`);
+    // Show toast notification (handled by consuming component)
   }, [currentUser]);
 
   const addTransaction = (trans: Omit<Transaction, 'id' | 'timestamp'>) => {
