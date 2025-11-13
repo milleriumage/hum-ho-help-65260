@@ -166,22 +166,24 @@ const Sidebar: React.FC = () => {
     {isGeminiModalOpen && <GeminiModal mode={geminiMode} onClose={() => setIsGeminiModalOpen(false)} />}
     
     {/* Botão flutuante para expandir quando colapsado */}
-    {/* Botão único no centro esquerdo para expandir/minimizar */}
-    <button
-      onClick={() => setIsCollapsed(!isCollapsed)}
-      className="fixed left-4 top-1/2 -translate-y-1/2 z-50 bg-neutral-700/95 hover:bg-neutral-600 text-white p-3 rounded-full shadow-xl transition-all border-2 border-neutral-600 hidden md:flex items-center justify-center backdrop-blur-sm"
-      aria-label={isCollapsed ? "Expandir menu" : "Minimizar menu"}
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`}>
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
-    
     <aside className={`${isCollapsed ? 'w-16' : 'w-64'} bg-neutral-800 border-r border-neutral-700 flex-shrink-0 hidden md:flex md:flex-col transition-all duration-300 relative`}>
-       
-       <div className={`p-4 border-b border-neutral-700 ${isCollapsed ? 'hidden' : ''}`}>
-           <ProfileHeader />
-       </div>
+        
+        {/* Botão de toggle dentro do sidebar */}
+        <div className="absolute -right-3 top-4 z-10">
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="bg-neutral-700/95 hover:bg-neutral-600 text-white p-2 rounded-full shadow-xl transition-all border-2 border-neutral-600 backdrop-blur-sm"
+            aria-label={isCollapsed ? "Expandir menu" : "Minimizar menu"}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`}>
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <div className={`p-4 border-b border-neutral-700 ${isCollapsed ? 'hidden' : ''}`}>
+            <ProfileHeader />
+          </div>
       <div className="flex-1 overflow-y-auto">
         <nav className={`p-4 ${isCollapsed ? 'p-2' : ''}`}>
             <ul className="space-y-2">

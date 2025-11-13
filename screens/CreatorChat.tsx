@@ -711,22 +711,22 @@ const CreatorChat: React.FC = () => {
     <div className="flex flex-col min-h-screen max-w-7xl mx-auto relative">
       {notification && <Notification message={notification.message} type={notification.type} />}
 
-      {/* Botão flutuante quando minimizado */}
+      {/* Botão flutuante quando minimizado - aparece no centro inferior no mobile */}
       {!isChatExpanded && (
         <button
           onClick={() => setIsChatExpanded(true)}
-          className="fixed bottom-6 left-6 z-50 p-4 bg-brand-primary hover:bg-brand-secondary text-white rounded-full shadow-2xl transition-all hover-scale flex items-center gap-2"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 z-50 p-4 bg-brand-primary hover:bg-brand-secondary text-white rounded-full shadow-2xl transition-all hover-scale flex items-center gap-2"
           aria-label="Expandir chat"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
           </svg>
-          <span className="font-semibold">Chat</span>
+          <span className="font-semibold hidden md:inline">Chat</span>
         </button>
       )}
 
       {/* Header com informações do criador e Card Carousel */}
-      <div className={`bg-neutral-900 border-b border-neutral-800 p-4 space-y-4 transition-all ${!isChatExpanded ? 'min-h-[calc(100vh-200px)]' : ''}`}>
+      <div className={`bg-neutral-900 border-b border-neutral-800 p-4 space-y-4 transition-all ${!isChatExpanded ? 'md:min-h-[calc(100vh-200px)]' : ''}`}>
         {/* Creator Info com botão Home */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -757,19 +757,19 @@ const CreatorChat: React.FC = () => {
         </div>
 
         {/* Card Carousel */}
-        <div className={`relative ${!isChatExpanded ? 'flex items-center justify-center py-8' : ''}`}>
+        <div className={`relative ${!isChatExpanded ? 'flex items-center justify-center py-4 md:py-8' : ''}`}>
           {creatorContent.length > 0 ? (
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-2 md:gap-4">
               <button
                 onClick={handlePrevCard}
                 disabled={isTransitioning}
-                className={`flex-shrink-0 rounded-full bg-neutral-800/80 hover:bg-neutral-700 text-white transition-all hover-scale backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${!isChatExpanded ? 'p-4' : 'p-3'}`}
+                className={`flex-shrink-0 rounded-full bg-neutral-800/80 hover:bg-neutral-700 text-white transition-all hover-scale backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${!isChatExpanded ? 'p-3 md:p-4' : 'p-3'}`}
                 aria-label="Previous card"
               >
                 <ChevronLeftIcon />
               </button>
               
-              <div className={`overflow-hidden ${!isChatExpanded ? 'w-full max-w-lg' : 'w-full max-w-md'}`}>
+              <div className={`overflow-hidden ${!isChatExpanded ? 'w-full max-w-sm md:max-w-lg' : 'w-full max-w-md'}`}>
                 <div 
                   key={currentCardIndex}
                   className="animate-fade-in transition-all duration-300"
@@ -783,7 +783,7 @@ const CreatorChat: React.FC = () => {
               <button
                 onClick={handleNextCard}
                 disabled={isTransitioning}
-                className={`flex-shrink-0 rounded-full bg-neutral-800/80 hover:bg-neutral-700 text-white transition-all hover-scale backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${!isChatExpanded ? 'p-4' : 'p-3'}`}
+                className={`flex-shrink-0 rounded-full bg-neutral-800/80 hover:bg-neutral-700 text-white transition-all hover-scale backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${!isChatExpanded ? 'p-3 md:p-4' : 'p-3'}`}
                 aria-label="Next card"
               >
                 <ChevronRightIcon />
