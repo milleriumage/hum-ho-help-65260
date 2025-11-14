@@ -113,9 +113,9 @@ interface CreditsContextType {
   setTagFilter: (tag: string | null) => void;
   setViewCreator: (creatorId: string | null) => void;
   setViewCreatorBySlug: (slug: string) => void;
-  shareVitrine: () => void;
-  shareChatLink: () => void;
-  shareCreatorChatList: () => void;
+  shareShowcase: () => void;
+  shareCreatorChat: () => void;
+  shareAllCreators: () => void;
 
   // Role & Screen Management
   setCurrentScreen: (screen: Screen) => void;
@@ -789,7 +789,7 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   }, [allUsers, setViewCreatorCallback]);
 
-  const shareVitrine = useCallback(() => {
+  const shareShowcase = useCallback(() => {
     if (!currentUser || !currentUser.vitrineSlug) {
         return;
     }
@@ -798,7 +798,7 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     // Show toast notification (handled by consuming component)
   }, [currentUser]);
 
-  const shareChatLink = useCallback(() => {
+  const shareCreatorChat = useCallback(() => {
     if (!currentUser || !currentUser.vitrineSlug) {
         return;
     }
@@ -807,7 +807,7 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     // Show toast notification (handled by consuming component)
   }, [currentUser]);
 
-  const shareCreatorChatList = useCallback(() => {
+  const shareAllCreators = useCallback(() => {
     const url = `${window.location.origin}/creator-chat`;
     navigator.clipboard.writeText(url);
     // Show toast notification (handled by consuming component)
@@ -1354,9 +1354,9 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
     setTagFilter: setTagFilterCallback,
     setViewCreator: setViewCreatorCallback,
     setViewCreatorBySlug,
-    shareVitrine,
-    shareChatLink,
-    shareCreatorChatList,
+    shareShowcase,
+    shareCreatorChat,
+    shareAllCreators,
     setCurrentScreen,
     updateDevSettings,
     addCreditsToUser,
@@ -1379,7 +1379,7 @@ export const CreditsProvider: React.FC<{ children: ReactNode }> = ({ children })
       showcasedUserIds, theme, addCredits, processPurchase, addReward, addContentItem, deleteContent, 
       updateSubscriptionPlan, updateCreditPackage, subscribeToPlan, cancelSubscription, subscribeUserToPlan, 
       cancelUserSubscription, addReaction, addLike, incrementShareCount, login, logout, registerOrLoginUser, 
-      updateUserProfile, followUser, unfollowUser, setTagFilterCallback, setViewCreatorCallback, setViewCreatorBySlug, shareVitrine, shareChatLink, shareCreatorChatList,
+      updateUserProfile, followUser, unfollowUser, setTagFilterCallback, setViewCreatorCallback, setViewCreatorBySlug, shareShowcase, shareCreatorChat, shareAllCreators,
       updateDevSettings, addCreditsToUser, toggleContentVisibility, removeContent, setTimeOut,
       hideAllContentFromCreator, deleteAllContentFromCreator, isTimedOut, timeoutInfo, sidebarVisibility, 
       updateSidebarVisibility, navbarVisibility, updateNavbarVisibility,

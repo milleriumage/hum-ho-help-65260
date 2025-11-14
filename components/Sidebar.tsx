@@ -81,7 +81,7 @@ interface NavConfig {
 }
 
 const Sidebar: React.FC = () => {
-  const { currentScreen, setCurrentScreen, userRole, logout, isLoggedIn, shareVitrine, shareChatLink, shareCreatorChatList, sidebarVisibility, currentUser, setViewCreatorBySlug } = useCredits();
+  const { currentScreen, setCurrentScreen, userRole, logout, isLoggedIn, shareShowcase, shareCreatorChat, shareAllCreators, sidebarVisibility, currentUser, setViewCreatorBySlug } = useCredits();
   const { signOut } = useAuth();
   const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
   const [geminiMode, setGeminiMode] = useState<'improve' | 'analyze'>('improve');
@@ -115,21 +115,21 @@ const Sidebar: React.FC = () => {
     }
   };
 
-  const handleShareVitrine = () => {
-    shareVitrine();
-    setNotification({ message: 'Vitrine link copied!', type: 'success' });
+  const handleShareShowcase = () => {
+    shareShowcase();
+    setNotification({ message: 'Showcase link copied!', type: 'success' });
     setTimeout(() => setNotification(null), 2000);
   };
 
-  const handleShareChat = () => {
-    shareChatLink();
-    setNotification({ message: 'Chat link copied!', type: 'success' });
+  const handleShareCreatorChat = () => {
+    shareCreatorChat();
+    setNotification({ message: 'Creator Chat link copied!', type: 'success' });
     setTimeout(() => setNotification(null), 2000);
   };
 
-  const handleShareCreatorList = () => {
-    shareCreatorChatList();
-    setNotification({ message: 'Creator chat link copied!', type: 'success' });
+  const handleShareAllCreators = () => {
+    shareAllCreators();
+    setNotification({ message: 'All Creators link copied!', type: 'success' });
     setTimeout(() => setNotification(null), 2000);
   };
 
@@ -190,11 +190,11 @@ const Sidebar: React.FC = () => {
     {!isCollapsed && (
       <aside className="fixed left-0 top-0 bottom-0 w-16 bg-neutral-800 border-r border-neutral-700 z-40 md:hidden flex flex-col py-4">
         <nav className="flex-1 flex flex-col gap-2 px-2 overflow-y-auto">
-          {/* Copy Vitrine Link - Mobile */}
+          {/* Copy Showcase Link - Mobile */}
           <button
-            onClick={handleShareVitrine}
+            onClick={handleShareShowcase}
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
-            title="Copy Vitrine Link"
+            title="Copy Showcase Link"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -203,22 +203,22 @@ const Sidebar: React.FC = () => {
             </svg>
           </button>
           
-          {/* Copy Chat Link - Mobile */}
+          {/* Copy Creator Chat Link - Mobile */}
           <button
-            onClick={handleShareChat}
+            onClick={handleShareCreatorChat}
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
-            title="Copy Chat Link"
+            title="Copy Creator Chat Link"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
           </button>
           
-          {/* Copy Creator List Link - Mobile */}
+          {/* Copy All Creators Link - Mobile */}
           <button
-            onClick={handleShareCreatorList}
+            onClick={handleShareAllCreators}
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-green/20 text-accent-green hover:bg-accent-green hover:text-white transition-colors"
-            title="Copy Creator List Link"
+            title="Copy All Creators Link"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -391,35 +391,35 @@ const Sidebar: React.FC = () => {
         {/* Share buttons - Desktop */}
         <div className={`p-4 border-b border-neutral-700 ${isCollapsed ? 'p-2' : ''}`}>
           {!isCollapsed && <p className="text-xs font-semibold uppercase text-neutral-500 mb-3">Share Links</p>}
-          <div className={`flex ${isCollapsed ? 'flex-col' : 'flex-row'} gap-2`}>
+          <div className={`flex ${isCollapsed ? 'flex-col' : 'flex-col'} gap-2`}>
             <button
-              onClick={handleShareVitrine}
+              onClick={handleShareShowcase}
               className="flex items-center justify-center flex-1 px-3 py-2 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors text-sm"
-              title="Copy Vitrine Link"
+              title="Copy Showcase Link"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                 <rect x="7" y="7" width="3" height="9"/>
                 <rect x="14" y="7" width="3" height="5"/>
               </svg>
-              {!isCollapsed && <span className="ml-2">Vitrine</span>}
+              {!isCollapsed && <span className="ml-2">Showcase</span>}
             </button>
             
             <button
-              onClick={handleShareChat}
+              onClick={handleShareCreatorChat}
               className="flex items-center justify-center flex-1 px-3 py-2 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors text-sm"
-              title="Copy Chat Link"
+              title="Copy Creator Chat Link"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
-              {!isCollapsed && <span className="ml-2">Chat</span>}
+              {!isCollapsed && <span className="ml-2">Creator</span>}
             </button>
             
             <button
-              onClick={handleShareCreatorList}
+              onClick={handleShareAllCreators}
               className="flex items-center justify-center flex-1 px-3 py-2 rounded-lg bg-accent-green/20 text-accent-green hover:bg-accent-green hover:text-white transition-colors text-sm"
-              title="Copy Creator List"
+              title="Copy All Creators Link"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -427,7 +427,7 @@ const Sidebar: React.FC = () => {
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              {!isCollapsed && <span className="ml-2">Creators</span>}
+              {!isCollapsed && <span className="ml-2">All</span>}
             </button>
           </div>
         </div>
@@ -590,8 +590,8 @@ const Sidebar: React.FC = () => {
 
       <div className={`p-4 border-t border-neutral-700 ${isCollapsed ? 'p-2' : ''}`}>
         {!isCollapsed && userRole === 'creator' && (
-            <button onClick={shareVitrine} className="w-full text-sm text-center bg-neutral-700 text-neutral-300 hover:bg-neutral-600 rounded p-2 mb-4">
-                Share Vitrine
+            <button onClick={shareShowcase} className="w-full text-sm text-center bg-neutral-700 text-neutral-300 hover:bg-neutral-600 rounded p-2 mb-4">
+                Share Showcase
             </button>
         )}
         <button 
