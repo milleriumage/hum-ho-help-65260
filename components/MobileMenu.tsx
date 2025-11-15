@@ -52,8 +52,16 @@ const ShareIcon = () => (
   </svg>
 );
 
+const ExternalLinkIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <line x1="10" y1="14" x2="21" y2="3"></line>
+  </svg>
+);
+
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) => {
-  const { currentScreen, userRole, sidebarVisibility, shareVitrine } = useCredits();
+  const { currentScreen, userRole, sidebarVisibility, shareShowcase, shareCreatorChat, shareAllCreators } = useCredits();
 
   if (!isOpen) return null;
 
@@ -104,24 +112,49 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavig
         </div>
 
         <div className="overflow-y-auto h-full pb-20">
-          {/* Share Funators e Funators Chat */}
+          {/* Share Links */}
           <div className="p-4 space-y-2 border-b border-neutral-700">
             <button
               onClick={() => {
-                shareVitrine();
+                shareShowcase();
                 onClose();
               }}
               className="w-full flex items-center p-3 rounded-lg bg-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
             >
               <span className="w-5 h-5 mr-3"><ShareIcon /></span>
-              <span className="font-semibold">Share Funators</span>
+              <span className="font-semibold">Share Showcase</span>
             </button>
             
             <button
-              onClick={() => onNavigate('creator-chat')}
+              onClick={() => {
+                shareCreatorChat();
+                onClose();
+              }}
               className="w-full flex items-center p-3 rounded-lg bg-accent-purple/20 text-accent-purple hover:bg-accent-purple hover:text-white transition-colors"
             >
               <span className="w-5 h-5 mr-3"><ChatIcon /></span>
+              <span className="font-semibold">Share Creator Chat</span>
+            </button>
+            
+            <button
+              onClick={() => {
+                shareAllCreators();
+                onClose();
+              }}
+              className="w-full flex items-center p-3 rounded-lg bg-accent-green/20 text-accent-green hover:bg-accent-green hover:text-white transition-colors"
+            >
+              <span className="w-5 h-5 mr-3"><UserIcon /></span>
+              <span className="font-semibold">Share All Creators</span>
+            </button>
+            
+            <button
+              onClick={() => {
+                window.open('https://www.chatlinks.link/chat', '_blank');
+                onClose();
+              }}
+              className="w-full flex items-center p-3 rounded-lg bg-accent-blue/20 text-accent-blue hover:bg-accent-blue hover:text-white transition-colors"
+            >
+              <span className="w-5 h-5 mr-3"><ExternalLinkIcon /></span>
               <span className="font-semibold">Funators Chat</span>
             </button>
           </div>
